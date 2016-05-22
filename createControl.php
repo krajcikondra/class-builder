@@ -17,7 +17,15 @@ if (($pos = strrpos($className, 'Form')) !== FALSE) {
 	$formBuilder = new \Helbrary\ClassBuilder\Control\Form\Builder($className, $namespace);
 
 	foreach ($formInputs as $input) {
-		$formBuilder->addInput(new \Helbrary\ClassBuilder\Control\Form\Input($input));
+
+		$label = $input;
+		if (strpos($input, ':') !== FALSE) {
+			$parts = explode(':', $input);
+			$input = $parts[0];
+			$label = $parts[1];
+		}
+
+		$formBuilder->addInput(new \Helbrary\ClassBuilder\Control\Form\Input($input, $label));
 	}
 
 
