@@ -21,12 +21,12 @@ class Input {
 	/** @var  bool */
 	protected $required;
 	
-	public function __construct($name, $label, $type = self::TYPE_TEXT, $required = FALSE)
+	public function __construct($name, $label, $required = FALSE, $type = self::TYPE_TEXT)
 	{
 		$this->name = $name;
-		$this->type = $type;
 		$this->label = $label;
 		$this->required = $required;
+		$this->type = $type;
 	}
 
 	/**
@@ -40,10 +40,14 @@ class Input {
 	public function render()
 	{
 		if ($this->type === self::TYPE_TEXT) {
-			return "\$form->addText('$this->name', '$this->label');";
+			$input = "\$form->addText('$this->name', '$this->label')";
 		} else {
 			return "NOT IMPLEMENTED YET";
 		}
+		if ($this->required) {
+			$input .= "\n			->setRequired()";
+		}
+		return $input . ";";
 	}
 
 }
